@@ -206,19 +206,20 @@ def upload_to_github(file_path, downloaded_file):
 def find_books_by_genre(message):
     genre = message.text
 
-    search_query = "SELECT * FROM saved_data WHERE genre = %s"
+    search_query = "SELECT * FROM saved_data WHERE genre = %s LIMIT 5"  
     cursor.execute(search_query, (genre,))
     books = cursor.fetchall()
 
     if books:
-        response = "Результати пошуку:\n"
+        response = "Перші 5 результатів пошуку:\n"  
         for book in books:
-            response += f"Жанр книги: {book[3]}\nНазва книги: {book[4]}\nАвтор книги: {book[6]}\nОпис книги: {book[7]}\nПосилання на завантаження книги: {book[9]}\n"
+            response += f"Жанр книги: {book[3]}\nНазва книги: {book[4]}\nАвтор книги: {book[5]}\nОпис книги: {book[6]}\nПосилання на завантаження книги: {book[8]}\n\n"
         bot.reply_to(message, response)
     else:
         bot.reply_to(message, "Книг з цим жанром не знайдено.")
 
     bot.send_message(message.chat.id, "Виберіть опцію з меню:", reply_markup=menu_markup)
+
 
 def find_books_by_name(message):
     book_name = message.text
@@ -231,7 +232,7 @@ def find_books_by_name(message):
     if books:
         response = "Результат пошуку: \n"
         for book in books:
-             response += f"Жанр книги: {book[3]}\nНазва книги: {book[4]}\nАвтор книги: {book[6]}\nОпис книги: {book[7]}\nПосилання на завантаження книги: {book[9]}\n"
+             response += f"Жанр книги: {book[3]}\nНазва книги: {book[4]}\nАвтор книги: {book[5]}\nОпис книги: {book[6]}\nПосилання на завантаження книги: {book[8]}\n"
         bot.reply_to(message, response)
     else:
         bot.reply_to(message, "Книги з такою назвою не знайдено.")
